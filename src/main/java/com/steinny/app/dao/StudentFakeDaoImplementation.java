@@ -1,12 +1,14 @@
 package com.steinny.app.dao;
 
 import com.steinny.app.model.Student;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Repository("fakeDao")
 public class StudentFakeDaoImplementation implements StudentDao {
 
     private final Map<String, Student> database = new HashMap<>();

@@ -2,6 +2,8 @@ package com.steinny.app.service;
 
 import com.steinny.app.dao.StudentDao;
 import com.steinny.app.model.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +13,8 @@ public class StudentService {
 
     private final StudentDao studentDao;
 
-    public StudentService(StudentDao studentDao) {
+    @Autowired
+    public StudentService(@Qualifier("fakeDao") StudentDao studentDao) {
         this.studentDao = studentDao;
     }
 
