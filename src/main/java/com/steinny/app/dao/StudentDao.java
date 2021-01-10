@@ -8,10 +8,6 @@ import java.util.UUID;
 
 public interface StudentDao {
     int insertNewStudent(UUID uuid, Student student);
-    default int insertNewStudent(Student student){
-        UUID uuid = UUID.randomUUID();
-        return insertNewStudent(uuid,student);
-    }
     Optional<Student> selectStudentById(UUID uuid);
     List<Student> selectAllStudents();
     int updateStudentById(UUID uuid, Student studentUpdate);

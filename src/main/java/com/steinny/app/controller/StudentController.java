@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -28,12 +29,12 @@ public class StudentController {
         return studentService.getAllStudents();
     }
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student getStudentById(@PathVariable("id") UUID id){
+    public Optional<Student> getStudentById(@PathVariable("id") UUID id){
         return studentService.getStudentById(id);
     }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public HttpStatus registerStudent(UUID uuid,@RequestBody @Validated @NonNull Student student){
-        studentService.addNewStudent(uuid,student);
+    @PostMapping(path = "/add",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpStatus registerStudent(@RequestBody @Validated @NonNull Student student){
+        studentService.addNewStudent(student.getId(),student);
         return HttpStatus.CREATED;
     }
     @PutMapping(path = "/{id}")
