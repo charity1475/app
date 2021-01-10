@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class StudentService {
@@ -18,26 +19,20 @@ public class StudentService {
         this.studentDao = studentDao;
     }
 
-    public int addNewStudent(String regNo, Student student){
-        if(studentDao.selectStudentById(regNo) == null){
-            studentDao.insertNewStudent(regNo,student);
-        }
+    public int addNewStudent(UUID uuid, Student student){
+        studentDao.insertNewStudent(uuid,student);
         return 1;
     }
-    public Student getStudentById(String regNo){
-        return studentDao.selectStudentById(regNo);
+    public Student getStudentById(UUID uuid){
+        return studentDao.selectStudentById(uuid);
     }
     public List<Student> getAllStudents(){
         return studentDao.selectAllStudents();
     }
-    public int editStudentById(String regNo, Student studentUpdate){
-        return studentDao.updateStudentById(regNo,studentUpdate);
+    public int editStudentById(UUID uuid, Student studentUpdate){
+        return studentDao.updateStudentById(uuid,studentUpdate);
     }
-    public int removeStudentById(String regNo){
-        if(studentDao.selectStudentById(regNo)==null){
-            return 0;
-        }else{
-            return studentDao.deleteStudentById(regNo);
+    public int removeStudentById(UUID uuid){
+            return studentDao.deleteStudentById(uuid);
         }
-    }
 }

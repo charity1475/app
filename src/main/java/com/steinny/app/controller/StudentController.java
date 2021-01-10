@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/students")
@@ -27,11 +28,24 @@ public class StudentController {
         return studentService.getAllStudents();
     }
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student getStudentById(@PathVariable("id") String id){
+    public Student getStudentById(@PathVariable("id") UUID id){
         return studentService.getStudentById(id);
     }
-    @PostMapping()
-    public HttpStatus registerStudent(@RequestBody @Validated @NonNull Student student){
-        studentService.addNewStudent(student);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpStatus registerStudent(UUID uuid,@RequestBody @Validated @NonNull Student student){
+        studentService.addNewStudent(uuid,student);
+        return HttpStatus.CREATED;
+    }
+    @PutMapping(path = "/{id}")
+    public void updateStudent(@PathVariable("id") @Validated @NonNull UUID uuid, Student student){
+        studentService.editStudentById(uuid, student);
+    }
+    @DeleteMapping(path = "/{id}")
+    public void deleteStudent(@PathVariable("id") UUID uuid){
+        studentService.removeStudentById(uuid);
+    }
+    @GetMapping(path = "/token")
+    public UUID getToken(){
+        return UUID.randomUUID();
     }
 }
