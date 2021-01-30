@@ -47,7 +47,13 @@ public class StudentService {
         studentRepository.findById(id);
         return 1;
     }
-    public void removeStudentById(Long id){
-           studentRepository.deleteById(id);
+    public void removeStudentByEmail(String email){
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+        if (studentOptional.isPresent()){
+            studentRepository.deleteById(studentOptional.get().getId());
+        }else {
+            String message = "Student with email " + email +" doesn't exist";
+            throw new IllegalStateException(message);
         }
+    }
 }
