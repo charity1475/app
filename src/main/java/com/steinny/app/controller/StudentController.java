@@ -36,7 +36,7 @@ public class StudentController {
     }
     @DeleteMapping(path = "/{email}")
     public void deleteByEmail(@PathVariable String email){
-
+        studentService.removeStudentByEmail(email);
     }
 
 }
