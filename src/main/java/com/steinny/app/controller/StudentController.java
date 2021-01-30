@@ -39,4 +39,11 @@ public class StudentController {
         studentService.removeStudentByEmail(email);
     }
 
+    @PutMapping(path = "/{email}")
+    public void updateByEmail(@PathVariable String email,
+                              @RequestParam String name,
+                              @RequestParam String newEmail){
+
+    }
+
 }

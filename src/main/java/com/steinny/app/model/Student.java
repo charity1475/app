@@ -61,4 +61,12 @@ public class Student {
     public Integer getAge() {
         return Period.between(this.dob,LocalDate.now()).getYears();
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

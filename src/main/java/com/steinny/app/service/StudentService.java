@@ -5,7 +5,9 @@ import com.steinny.app.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -51,6 +53,29 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
         if (studentOptional.isPresent()){
             studentRepository.deleteById(studentOptional.get().getId());
+        }else {
+            String message = "Student with email " + email +" doesn't exist";
+            throw new IllegalStateException(message);
+        }
+    }
+
+    @Transactional
+    public Student updateStudentByEmail(String email,String newEmail, String name){
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+        if (studentOptional.isPresent()){
+            if (name!=null && name.length()>0 && Objects.equals(studentOptional.get().getName(),name)){
+                studentOptional.get().setName(name);
+            }
+            if (newEmail!=null && newEmail.length()>0 && Objects.equals(studentOptional.get().getEmail(),newEmail)){
+                Optional<Student> student = studentRepository.findStudentByEmail(newEmail);
+                if (student.isPresent()){
+                    String message = "The new email you chose " + newEmail + " already exist";
+                    throw new IllegalStateException(message);
+                }else {
+                    studentOptional.get().setEmail(newEmail);
+                }
+            }
+            return studentOptional.get();
         }else {
             String message = "Student with email " + email +" doesn't exist";
             throw new IllegalStateException(message);
