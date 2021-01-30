@@ -60,24 +60,23 @@ public class StudentService {
     }
 
     @Transactional
-    public Student updateStudentByEmail(String email,String newEmail, String name){
-        Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+    public void updateStudentByEmail(Long id,String name,String email){
+        Optional<Student> studentOptional = studentRepository.findById(id);
         if (studentOptional.isPresent()){
             if (name!=null && name.length()>0 && Objects.equals(studentOptional.get().getName(),name)){
                 studentOptional.get().setName(name);
             }
-            if (newEmail!=null && newEmail.length()>0 && Objects.equals(studentOptional.get().getEmail(),newEmail)){
-                Optional<Student> student = studentRepository.findStudentByEmail(newEmail);
+            if (email!=null && email.length()>0 && Objects.equals(studentOptional.get().getEmail(),email)){
+                Optional<Student> student = studentRepository.findStudentByEmail(email);
                 if (student.isPresent()){
-                    String message = "The new email you chose " + newEmail + " already exist";
+                    String message = "The new email you chose " + email + " already exist";
                     throw new IllegalStateException(message);
                 }else {
-                    studentOptional.get().setEmail(newEmail);
+                    studentOptional.get().setEmail(email);
                 }
             }
-            return studentOptional.get();
         }else {
-            String message = "Student with email " + email +" doesn't exist";
+            String message = "Student with Id " + id +" doesn't exist";
             throw new IllegalStateException(message);
         }
     }
