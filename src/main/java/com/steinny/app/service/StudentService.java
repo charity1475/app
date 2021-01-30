@@ -45,10 +45,6 @@ public class StudentService {
     }
 
 
-    public int editStudentById(Long id, Student studentUpdate){
-        studentRepository.findById(id);
-        return 1;
-    }
     public void removeStudentByEmail(String email){
         Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
         if (studentOptional.isPresent()){
@@ -60,24 +56,22 @@ public class StudentService {
     }
 
     @Transactional
-    public void updateStudentByEmail(Long id,String name,String email){
-        Optional<Student> studentOptional = studentRepository.findById(id);
-        if (studentOptional.isPresent()){
-            if (name!=null && name.length()>0 && Objects.equals(studentOptional.get().getName(),name)){
-                studentOptional.get().setName(name);
+    public void updateStudent(Long id,String name,String email){
+        Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalStateException("Student with Id " + id +" doesn't exist"));
+
+            if (name!=null && name.length()>0 && Objects.equals(student.getName(),name)){
+                student.setName(name);
+                studentRepository.save(student);
             }
-            if (email!=null && email.length()>0 && Objects.equals(studentOptional.get().getEmail(),email)){
-                Optional<Student> student = studentRepository.findStudentByEmail(email);
-                if (student.isPresent()){
+            if (email!=null && email.length()>0 && Objects.equals(student.getEmail(),email)){
+                Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+                if (studentOptional.isPresent()){
                     String message = "The new email you chose " + email + " already exist";
                     throw new IllegalStateException(message);
                 }else {
-                    studentOptional.get().setEmail(email);
+                    student.setEmail(email);
+                    studentRepository.save(student);
                 }
             }
-        }else {
-            String message = "Student with Id " + id +" doesn't exist";
-            throw new IllegalStateException(message);
-        }
     }
 }

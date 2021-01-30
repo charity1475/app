@@ -1,6 +1,7 @@
 package com.steinny.app.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.*;
@@ -62,6 +63,10 @@ public class Student {
         return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -69,4 +74,5 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
