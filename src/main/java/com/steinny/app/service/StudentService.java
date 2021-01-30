@@ -59,12 +59,12 @@ public class StudentService {
     public void updateStudent(Long id,String name,String email){
         Student student = studentRepository.findById(id).orElseThrow(()-> new IllegalStateException("Student with Id " + id +" doesn't exist"));
 
-            if (name!=null && name.length()>0 && Objects.equals(student.getName(),name)){
+            if (name!=null && name.length()>0){
                 student.setName(name);
                 studentRepository.save(student);
             }
-            if (email!=null && email.length()>0 && Objects.equals(student.getEmail(),email)){
-                Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+            if (email!=null && email.length()>0){
+                Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
                 if (studentOptional.isPresent()){
                     String message = "The new email you chose " + email + " already exist";
                     throw new IllegalStateException(message);
