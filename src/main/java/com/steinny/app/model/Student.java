@@ -1,7 +1,6 @@
 package com.steinny.app.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import org.hibernate.annotations.Table;
 
 import javax.persistence.*;

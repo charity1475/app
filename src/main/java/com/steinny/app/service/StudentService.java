@@ -21,10 +21,22 @@ public class StudentService {
 
 
     public void addNewStudent(Student student){
-        studentRepository.save(student);
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+        if(studentOptional.isPresent()){
+            String message = "Student with email " + student.getEmail() +" already exists";
+            throw new IllegalStateException(message);
+        }else {
+            studentRepository.save(student);
+        }
     }
-    public Optional<Student> getStudentById(Long id){
-        return studentRepository.findById(id);
+    public Optional<Student> getStudentByEmail(String email){
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(email);
+        if (!studentOptional.isPresent()){
+            String message = "Student with email " + email +" doesn't exist";
+            throw new IllegalStateException(message);
+        }else {
+            return studentRepository.findStudentByEmail(email);
+        }
     }
     public List<Student> getAllStudents(){
         return studentRepository.findAll();
