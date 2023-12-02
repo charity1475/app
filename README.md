@@ -1,4 +1,4 @@
-# cive drop Software form submission API
+# Spring Boot Demo
 
 [![Build Status](https://travis-ci.com/charity1475/steinny.svg?branch=master)](https://travis-ci.com/charity1475/steinny) [![Netlify Status](https://api.netlify.com/api/v1/badges/99c4c587-7d71-4a6c-b8f5-7d4e55d39c44/deploy-status)](https://app.netlify.com/sites/charity1475/deploys)
 
@@ -21,6 +21,3 @@ java -jar jarname.jar
 # or specify port
 java -jar jarname.jar --server.port=8081
 ```
-## Further help
-I will attach the link to the documentation page with yaml file 
-@charity1475 ---
